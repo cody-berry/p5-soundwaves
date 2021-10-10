@@ -5,9 +5,9 @@ This is a simulation of a longitudinal wave and a sound wave, or what Zz has it
 like. Inspired by the Physics Khan Academy teachers and Zz.
 
 version comments:
-    grid of particles and Particle class
+.   grid of particles and Particle class
     update—sine wave
-    activated and delay for sound wave
+    delay for sound wave
  */
 
 let font
@@ -41,4 +41,5 @@ function setup() {
 function draw() {
     background(209, 80, 30)
     particles.forEach(p => p.show())
+    particles.forEach(p => p.update())
 }
