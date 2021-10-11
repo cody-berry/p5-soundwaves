@@ -5,15 +5,19 @@ class particle {
         this.pos = new p5.Vector(x, y)
         this.r = 1
         this.originalx = x
-
-        // we need our period for us to oscillate
-        this.T = 100
         // and we want some more color.
         this.hue = map(this.originalx, 0, width, 0, 360)
+        // and how about a delay?
+        this.delay = Infinity
+        this.originald = 0
+        // and we need an activated.
+        this.activated = false
+        // and we want the particles to steadily move.
+        this.offset = 0
     }
 
     show() {
-        // if (abs(this.pos.x - this.originalx) >= 5) {
+        // if (abs(this.pos.x - this.originalX) >= 5) {
         //     fill(this.hue % 360, 50, 100)
         //     stroke(this.hue % 360, 50, 100)
         // }
@@ -25,15 +29,29 @@ class particle {
         circle(this.pos.x, this.pos.y, this.r * 2)
     }
 
+    activate(amp, period, delay) {
+        this.amp = amp
+        this.T = period
+        this.delay = delay
+        this.originald = delay
+    }
+
     update() {
-        // what is our omega?
-        let ω = 2*PI/this.T
+        // we don't oscillate unless our countdown timer has run off
+        if (this.delay <= 0) {
+            this.activated = true
+        }
 
-        // what is our amplitude?
-        let amp = map(sin(ω*this.originalx), -1, 1, 0, 10)
-
-        // and now we just need our x position!
-        this.pos.x = this.originalx + amp*sin(frameCount/5)
+        if (this.activated) {
+            // we need our ω.
+            let ω = 2*PI/this.T
+            // we need our x position!
+            this.pos.x =
+                this.originalx + this.amp * sin(ω*(frameCount/5 - this.originald))
+        } else {
+            if (this.delay !== Infinity)
+                this.delay -= 1
+        }
     }
 }
 

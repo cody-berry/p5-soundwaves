@@ -6,8 +6,8 @@ like. Inspired by the Physics Khan Academy teachers and Zz.
 
 version comments:
 .   grid of particles and Particle class
-    update—sine wave
-    delay for sound wave
+.   update—sine wave
+.   delay for sound wave
  */
 
 let font
@@ -25,21 +25,34 @@ function setup() {
     createCanvas(640, 360)
     colorMode(HSB, 360, 100, 100, 100)
 
-    ROWS = 55
-    COLUMNS = 28
+    ROWS = width/10
+    COLUMNS = height/10
 
-    PADDING_X = 50
-    PADDING_Y = 50
+    PADDING_X = 0
+    PADDING_Y = 0
 
     for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLUMNS; col++) {
-            particles.push(new particle(PADDING_X + 10*row, PADDING_Y + 10*col))
+            particles.push(new particle(PADDING_X + 10*row,
+                PADDING_Y + 10*col))
         }
     }
 }
 
 function draw() {
     background(209, 80, 30)
-    particles.forEach(p => p.show())
-    particles.forEach(p => p.update())
+    particles.forEach(function(p) {
+        p.show()
+        p.update()
+    })
+}
+
+
+function mousePressed() {
+    for (let p of particles) {
+        p.activate(
+            25,
+            20,
+            p.originalx/10)
+    }
 }
