@@ -16,6 +16,7 @@ let ROWS
 let COLUMNS
 let PADDING_X
 let PADDING_Y
+let SPACING
 
 function preload() {
     font = loadFont('fonts/Meiryo-01.ttf')
@@ -25,16 +26,19 @@ function setup() {
     createCanvas(640, 360)
     colorMode(HSB, 360, 100, 100, 100)
 
-    ROWS = width/10
-    COLUMNS = height/10
+    frameRate(144)
 
-    PADDING_X = 0
-    PADDING_Y = 0
+    PADDING_X = 50
+    PADDING_Y = 50
+
+    SPACING = 10
+    ROWS = (width - 2*PADDING_X)/SPACING
+    COLUMNS = (height - 2*PADDING_X)/SPACING
 
     for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLUMNS; col++) {
-            particles.push(new particle(PADDING_X + 10*row,
-                PADDING_Y + 10*col))
+            particles.push(new particle(PADDING_X + SPACING*row,
+                PADDING_Y + SPACING*col))
         }
     }
 }
@@ -50,9 +54,11 @@ function draw() {
 
 function mousePressed() {
     for (let p of particles) {
+        // we want every particle to hit another one, so we need to make it
+        // this.originalX.
         p.activate(
-            25,
             20,
-            p.originalx/10)
+            6,
+            p.originalx)
     }
 }
