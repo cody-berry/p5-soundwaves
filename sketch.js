@@ -1,22 +1,23 @@
 /*
 @author Cody
-@date 2021-10-10
-This is a simulation of a longitudinal wave and a sound wave, or what Zz has it
-like. Inspired by the Physics Khan Academy teachers and Zz.
+@date 2021-10-13
 
-version comments:
-.   grid of particles and Particle class
-.   update—sine wave
-.   delay for sound wave
+version comments
+    grid of particles
+    update—sine wave
+    sound wave—activate and delay
+
+bugs
+    hidden particles from background
  */
-
 let font
 let particles = []
+let SPACING
 let ROWS
 let COLUMNS
 let PADDING_X
 let PADDING_Y
-let SPACING
+let cody
 
 function preload() {
     font = loadFont('fonts/Meiryo-01.ttf')
@@ -26,39 +27,27 @@ function setup() {
     createCanvas(640, 360)
     colorMode(HSB, 360, 100, 100, 100)
 
-    frameRate(144)
-
     PADDING_X = 50
     PADDING_Y = 50
 
     SPACING = 10
     ROWS = (width - 2*PADDING_X)/SPACING
-    COLUMNS = (height - 2*PADDING_X)/SPACING
+    COLUMNS = (height - 2*PADDING_Y)/SPACING
 
     for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLUMNS; col++) {
-            particles.push(new particle(PADDING_X + SPACING*row,
-                PADDING_Y + SPACING*col))
+            let x = PADDING_X + row*SPACING
+            let y = PADDING_Y + col*SPACING
+            particles.push(new Particle(x, y))
         }
     }
+
+    cody = new Particle(PADDING_X, PADDING_Y)
 }
 
 function draw() {
     background(209, 80, 30)
-    particles.forEach(function(p) {
-        p.show()
-        p.update()
-    })
-}
-
-
-function mousePressed() {
-    for (let p of particles) {
-        // we want every particle to hit another one, so we need to make it
-        // this.originalX.
-        p.activate(
-            20,
-            6,
-            p.originalx)
-    }
+    background(234, 34, 24)
+    particles.forEach(p => p.show())
+    cody.show()
 }
