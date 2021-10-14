@@ -4,7 +4,7 @@
 
 version comments
 .   grid of particles
-    update—sine wave
+.   update—sine wave
     sound wave—activate and delay
 
 bugs
@@ -48,3 +48,14 @@ function draw() {
     particles.forEach(p => p.show())
     particles.forEach(p => p.update())
 }
+
+function mousePressed() {
+    if (!particles[0].activated) {
+        particles.forEach(p => p.activate(250, //amplitude
+            9, //period
+            p.initialX))
+    } else {
+        noLoop()
+    }
+}
+
