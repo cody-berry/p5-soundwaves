@@ -3,7 +3,7 @@
 @date 2021-10-13
 
 version comments
-    grid of particles
+.   grid of particles
     update—sine wave
     sound wave—activate and delay
 
@@ -17,7 +17,6 @@ let ROWS
 let COLUMNS
 let PADDING_X
 let PADDING_Y
-let cody
 
 function preload() {
     font = loadFont('fonts/Meiryo-01.ttf')
@@ -41,13 +40,11 @@ function setup() {
             particles.push(new Particle(x, y))
         }
     }
-
-    cody = new Particle(PADDING_X, PADDING_Y)
 }
 
 function draw() {
     background(209, 80, 30)
     background(234, 34, 24)
     particles.forEach(p => p.show())
-    cody.show()
+    particles.forEach(p => p.update())
 }
